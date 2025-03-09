@@ -1,0 +1,29 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - main  # Exécuter les tests quand on push sur la branche "main"
+  pull_request:
+    branches:
+      - main  # Exécuter les tests lors d'un Pull Request vers "main"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # Utiliser Ubuntu comme environnement
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v3
+
+      - name: Configurer Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # JDK OpenJDK de Eclipse Temurin
+          java-version: '17'       # Remplace par ta version si nécessaire
+
+      - name: Compiler le projet avec Maven
+        run: mvn clean package
+
+      - name: Exécuter les tests Maven
+        run: mvn test
